@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {HashRouter} from "react-router-dom";
+import {Provider} from 'react-redux';
+import {Header} from "./n1-main/m1-ui/header/Header";
+import {Routes} from "./n1-main/m1-ui/routes/Routes";
+import {store} from "./n1-main/m2-bll/store";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <Provider store={store}>
+                <HashRouter>
+
+                    <Header/>
+
+                    <Routes/>
+
+                </HashRouter>
+            </Provider>
+        </div>
+    );
 }
 
 export default App;
