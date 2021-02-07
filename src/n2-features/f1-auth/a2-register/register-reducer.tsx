@@ -1,8 +1,8 @@
-import {Dispatch} from 'redux'
+import React from 'react'
 import {RegisterAPI} from "../../../n1-main/m3-dal/instance";
 import {Redirect} from "react-router-dom";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
+
+
 
 
 const initialState = {}
