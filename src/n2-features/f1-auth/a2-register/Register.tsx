@@ -1,15 +1,21 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {RegisterTC} from "./register-reducer";
-
+import {RegisterTC, setIsRegister} from "./register-reducer";
+import {HashRouter, Redirect} from "react-router-dom";
+import {AppRootStateType} from "../../../n1-main/m2-bll/store";
+import {PATH} from "../../../n1-main/m1-ui/routes/Routes";
 
 export const Register = () => {
     const dispatch = useDispatch()
-    type FormikErrorType = {
+
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+    const isRegister = useSelector<AppRootStateType, boolean>(state => state.register.isRegister)
+       type FormikErrorType = {
         email?: string
         password?: string
     }
+
     const formik = useFormik({
         initialValues: {
             email: 'potapov.eo@yandex.ru',
@@ -32,18 +38,20 @@ export const Register = () => {
 
 
         onSubmit: values => {
-            console.log(values)
-            dispatch(RegisterTC(values))
 
+            dispatch(RegisterTC(values))
             formik.resetForm()
         },
     })
 
-    /* if (isLoggedIn) {
+    if (isLoggedIn) {
 
-         return <Redirect to={"/"}/>
-     }*/
+        return <Redirect to={PATH.PROFILE}/>
+    }
+    if (isRegister) {
 
+        return <Redirect to={PATH.PROFILE}/>
+    }
 
     return <div>
 
@@ -55,8 +63,7 @@ export const Register = () => {
                     name="email"
                     onChange={formik.handleChange}
                     value={formik.values.email}
-                                 /> E-mail
-
+                /> E-mail
                 {formik.touched.email && formik.errors.email ?
                     <div style={{color: "red"}}>{formik.errors.email}</div> : null}
             </div>
@@ -67,14 +74,14 @@ export const Register = () => {
                     name="password"
                     onChange={formik.handleChange}
                     value={formik.values.password}
-
                 /> Password
                 {formik.touched.password && formik.errors.password ?
                     <div style={{color: "red"}}>{formik.errors.password}</div> : null}
             </div>
-            <button type="submit">Login</button>
+            <button type="submit">Register</button>
 
         </form>
+
 
     </div>
 }
